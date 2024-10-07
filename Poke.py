@@ -83,34 +83,38 @@ def get_random_pokemon(pokemon_list):
     if not pokemon_list:
         return None
 
-    # Choisir un Pokémon aléatoire
-    pokemon_name, pokemon_id = random.choice(pokemon_list)
-    # Récupérer les détails du Pokémon
-    response = requests.get(f"https://pokeapi.co/api/v2/pokemon/{pokemon_id}")
+    while True:  # Boucle jusqu'à ce qu'un Pokémon valide soit trouvé
+        # Choisir un Pokémon aléatoire
+        pokemon_name, pokemon_id = random.choice(pokemon_list)
+        # Récupérer les détails du Pokémon
+        response = requests.get(f"https://pokeapi.co/api/v2/pokemon/{pokemon_id}")
 
-    if response.status_code == 200:
-        data = response.json()
-        # Extraire les stats
-        stats = {stat['stat']['name']: stat['base_stat'] for stat in data['stats']}
+        if response.status_code == 200:
+            data = response.json()
+            # Extraire les stats
+            stats = {stat['stat']['name']: stat['base_stat'] for stat in data['stats']}
 
-        # Extraire les mouvements
-        moves = [move['move']['name'] for move in data['moves']]
+            # Extraire les mouvements
+            moves = [move['move']['name'] for move in data['moves']]
 
-        # Sélectionner 4 mouvements aléatoires
-        selected_moves = random.sample(moves, min(4,
-                                                  len(moves)))  # S'assurer de ne pas dépasser le nombre de mouvements disponibles
+            # Vérifier si le Pokémon a au moins un mouvement
+            if moves:
+                # Sélectionner 4 mouvements aléatoires
+                selected_moves = random.sample(moves, min(4, len(moves)))  # S'assurer de ne pas dépasser le nombre de mouvements disponibles
 
-        # Récupérer les détails des mouvements sélectionnés
-        moves_details = [get_move_details(move) for move in selected_moves]
+                # Récupérer les détails des mouvements sélectionnés
+                moves_details = [get_move_details(move) for move in selected_moves]
 
-        return {
-            'name': data['name'],
-            'stats': stats,
-            'moves': moves_details  # Stocker les détails des mouvements
-        }
-    else:
-        print(f"Erreur lors de la récupération du Pokémon avec ID {pokemon_id}")
-        return None
+                return {
+                    'name': data['name'],
+                    'stats': stats,
+                    'moves': moves_details  # Stocker les détails des mouvements
+                }
+            else:
+                print(f"{pokemon_name.capitalize()} n'a pas de mouvements. Récupération d'un autre Pokémon...")
+        else:
+            print(f"Erreur lors de la récupération du Pokémon avec ID {pokemon_id}")
+            return None
 
 
 # Fonction pour récupérer 16 Pokémon uniques avec leurs stats et mouvements
@@ -145,22 +149,72 @@ for pokemon in unique_pokemons:
 
 # Fonction pour simuler un combat entre deux Pokémon
 def simulate_battle(pokemon1, pokemon2):
-    # Extrait les stats des Pokémon
+    # Extraire les stats des deux Pokémon
     stats1 = pokemon1['stats']
     stats2 = pokemon2['stats']
 
-    # Exemple simple : comparaison de la stat d'attaque
-    attack1 = stats1.get('attack', 0)
-    attack2 = stats2.get('attack', 0)
+    # Extraire les HP et la vitesse
+    hp1 = stats1.get('hp', 0)
+    speed1 = stats1.get('speed', 0)
 
-    # Décider le vainqueur basé sur une simple comparaison d'attaque
-    if attack1 > attack2:
-        return pokemon1
-    elif attack2 > attack1:
-        return pokemon2
+    hp2 = stats2.get('hp', 0)
+    speed2 = stats2.get('speed', 0)
+
+    # Déterminer quel Pokémon attaque en premier (celui avec le plus de vitesse)
+    if speed1 > speed2:
+        first, second = pokemon1, pokemon2
+        first_hp, second_hp = hp1, hp2
     else:
-        # En cas d'égalité, choisir aléatoirement un vainqueur
-        return random.choice([pokemon1, pokemon2])
+        first, second = pokemon2, pokemon1
+        first_hp, second_hp = hp2, hp1
+
+    print(f"{first['name'].capitalize()} attaque en premier avec une vitesse de {speed1 if first == pokemon1 else speed2}.")
+
+    # Combat en boucle jusqu'à ce que l'un des Pokémon ait 0 HP
+    while first_hp > 0 and second_hp > 0:
+        # Choisir aléatoirement un move pour le premier Pokémon
+        first_move = random.choice(first['moves'])
+        first_move_name = first_move['name']
+        first_move_power = first_move.get('power', 0)  # Utilisation de get pour éviter None
+
+        # Si la puissance est "N/A" ou None, on la remplace par 0
+        if first_move_power is None or first_move_power == "N/A":
+            first_move_power = 0
+
+        # Le premier Pokémon attaque le second
+        damage = first_move_power
+        second_hp -= damage
+        print(f"{first['name'].capitalize()} utilise {first_move_name.capitalize()} et inflige {damage} points de dégâts à {second['name'].capitalize()}. HP restants de {second['name'].capitalize()}: {max(second_hp, 0)}")
+
+        # Vérifier si le second Pokémon est KO
+        if second_hp <= 0:
+            print(f"{second['name'].capitalize()} est KO !")
+            return first
+
+        # Choisir aléatoirement un move pour le second Pokémon
+        second_move = random.choice(second['moves'])
+        second_move_name = second_move['name']
+        second_move_power = second_move.get('power', 0)  # Utilisation de get pour éviter None
+
+        # Si la puissance est "N/A" ou None, on la remplace par 0
+        if second_move_power is None or second_move_power == "N/A":
+            second_move_power = 0
+
+        # Le second Pokémon attaque le premier
+        damage = second_move_power
+        first_hp -= damage
+        print(f"{second['name'].capitalize()} utilise {second_move_name.capitalize()} et inflige {damage} points de dégâts à {first['name'].capitalize()}. HP restants de {first['name'].capitalize()}: {max(first_hp, 0)}")
+
+        # Vérifier si le premier Pokémon est KO
+        if first_hp <= 0:
+            print(f"{first['name'].capitalize()} est KO !")
+            return second
+
+    # Cette ligne ne sera jamais atteinte normalement, mais juste au cas où.
+    return None
+
+    winner = simulate_battle(pokemon1, pokemon2)
+    print(f"\nLe vainqueur est {winner['name'].capitalize()} !")
 
 
 # Fonction pour organiser le tournoi
@@ -190,7 +244,7 @@ def run_tournament(pokemons):
         round_number += 1
 
     # Afficher le vainqueur final
-    print(f"Vainqueur du tournoi: {pokemons[0]['name'].capitalize()}")
+    print(f"Vainqueur du tournoi de la ligue Rubis : {pokemons[0]['name'].capitalize()}")
 
 
 # Exemple d'utilisation pour exécuter le tournoi
