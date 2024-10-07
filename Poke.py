@@ -27,10 +27,12 @@ def get_move_details(move_name):
         response = requests.get(f"https://pokeapi.co/api/v2/move/{move_name}")
         if response.status_code == 200:
             move_data = response.json()
+            damage_class = move_data['damage_class']['name'] if move_data.get('damage_class') else 'N/A'
             return {
                 'name': move_data['name'],
                 'power': move_data.get('power', 'N/A'),  # La puissance peut ne pas être disponible
-                'type': move_data['type']['name']
+                'type': move_data['type']['name'],
+                'damage_class': damage_class.capitalize()  # Ajout de la classe de dégâts
             }
         else:
             print(f"Erreur lors de la récupération du mouvement {move_name}: {response.status_code}")
@@ -99,4 +101,5 @@ for pokemon in unique_pokemons:
         print(f"  - {stat_name.capitalize()}: {stat_value}")
     print("Mouvements sélectionnés :")
     for move in pokemon['moves']:
-        print(f"  - {move['name'].capitalize()} (Type: {move['type'].capitalize()}, Puissance: {move['power']})")
+        print(
+            f"  - {move['name'].capitalize()} (Type: {move['type'].capitalize()}, Puissance: {move['power']}, Classe de dégâts: {move['damage_class']})")
