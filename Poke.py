@@ -5,6 +5,7 @@ import random
 BASE_URL = "https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0"
 BASE_URL_TYPE = "https://pokeapi.co/api/v2/type/"
 
+
 # Fonction pour récupérer tous les Pokémon
 def get_all_pokemon():
     try:
@@ -128,21 +129,17 @@ def get_unique_pokemons_with_details(pokemon_list, count=16):
 pokemon_list = get_all_pokemon()
 unique_pokemons = get_unique_pokemons_with_details(pokemon_list, 16)
 
-print("Liste des 16 Pokémon récupérés (sans doublon) :")
+print("Liste des 16 Pokémon récupérés :")
 for pokemon in unique_pokemons:
     print(f"\nPokémon : {pokemon['name'].capitalize()}")
     print("Stats :")
     for stat_name, stat_value in pokemon['stats'].items():
         print(f"  - {stat_name.capitalize()}: {stat_value}")
-    print("Mouvements sélectionnés :")
+    print(f"\nMoveset {pokemon['name'].capitalize()} :")
     for move in pokemon['moves']:
         print(
             f"  - {move['name'].capitalize()} (Type: {move['type'].capitalize()}, Puissance: {move['power']}, Classe de dégâts: {move['damage_class']})")
-
-
-
-
-
+    print("-" * 50)
 
 
 
@@ -164,6 +161,7 @@ def simulate_battle(pokemon1, pokemon2):
     else:
         # En cas d'égalité, choisir aléatoirement un vainqueur
         return random.choice([pokemon1, pokemon2])
+
 
 # Fonction pour organiser le tournoi
 def run_tournament(pokemons):
