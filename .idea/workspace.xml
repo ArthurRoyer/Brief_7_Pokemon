@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8883755c-0ad8-4505-a489-3cf97f0006ff" name="Changes" comment="Maj">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Poke.py" beforeDir="false" afterPath="$PROJECT_DIR$/Poke.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

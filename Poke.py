@@ -117,7 +117,7 @@ def get_random_pokemon(pokemon_list):
             return None
 
 
-# Fonction pour récupérer 16 Pokémon uniques avec leurs stats et mouvements
+# Fonction pour récupérer 16 Pokémon uniques avec leurs stats et moves
 def get_unique_pokemons_with_details(pokemon_list, count=16):
     unique_pokemons = []  # Liste pour stocker les Pokémon avec leurs détails
 
