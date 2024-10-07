@@ -111,7 +111,7 @@ def get_random_pokemon(pokemon_list):
                     'moves': moves_details  # Stocker les détails des mouvements
                 }
             else:
-                print(f"{pokemon_name.capitalize()} n'a pas de mouvements. Récupération d'un autre Pokémon...")
+                print(f"{pokemon_name.capitalize()} n'a pas de moves. Récupération d'un autre Pokémon...")
         else:
             print(f"Erreur lors de la récupération du Pokémon avec ID {pokemon_id}")
             return None
