@@ -21,6 +21,25 @@ def get_all_pokemon():
         return []
 
 
+# Fonction pour récupérer les détails d'un mouvement
+def get_move_details(move_name):
+    try:
+        response = requests.get(f"https://pokeapi.co/api/v2/move/{move_name}")
+        if response.status_code == 200:
+            move_data = response.json()
+            return {
+                'name': move_data['name'],
+                'power': move_data.get('power', 'N/A'),  # La puissance peut ne pas être disponible
+                'type': move_data['type']['name']
+            }
+        else:
+            print(f"Erreur lors de la récupération du mouvement {move_name}: {response.status_code}")
+            return None
+    except Exception as e:
+        print(f"Erreur lors de la récupération du mouvement {move_name}: {e}")
+        return None
+
+
 # Fonction pour récupérer les données d'un Pokémon aléatoire
 def get_random_pokemon(pokemon_list):
     if not pokemon_list:
@@ -43,10 +62,13 @@ def get_random_pokemon(pokemon_list):
         selected_moves = random.sample(moves, min(4,
                                                   len(moves)))  # S'assurer de ne pas dépasser le nombre de mouvements disponibles
 
+        # Récupérer les détails des mouvements sélectionnés
+        moves_details = [get_move_details(move) for move in selected_moves]
+
         return {
             'name': data['name'],
             'stats': stats,
-            'moves': selected_moves
+            'moves': moves_details  # Stocker les détails des mouvements
         }
     else:
         print(f"Erreur lors de la récupération du Pokémon avec ID {pokemon_id}")
@@ -64,6 +86,7 @@ def get_unique_pokemons_with_details(pokemon_list, count=16):
 
     return unique_pokemons
 
+
 # Exemple d'utilisation
 pokemon_list = get_all_pokemon()
 unique_pokemons = get_unique_pokemons_with_details(pokemon_list, 16)
@@ -76,4 +99,4 @@ for pokemon in unique_pokemons:
         print(f"  - {stat_name.capitalize()}: {stat_value}")
     print("Mouvements sélectionnés :")
     for move in pokemon['moves']:
-        print(f"  - {move.capitalize()}")
+        print(f"  - {move['name'].capitalize()} (Type: {move['type'].capitalize()}, Puissance: {move['power']})")
