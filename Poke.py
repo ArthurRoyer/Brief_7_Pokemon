@@ -103,3 +103,5 @@ for pokemon in unique_pokemons:
     for move in pokemon['moves']:
         print(
             f"  - {move['name'].capitalize()} (Type: {move['type'].capitalize()}, Puissance: {move['power']}, Classe de dégâts: {move['damage_class']})")
+
+#fkf
