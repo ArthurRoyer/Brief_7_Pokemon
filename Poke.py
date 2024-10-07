@@ -53,10 +53,27 @@ def get_random_pokemon(pokemon_list):
         return None
 
 
+# Fonction pour récupérer 16 Pokémon uniques avec leurs stats et mouvements
+def get_unique_pokemons_with_details(pokemon_list, count=16):
+    unique_pokemons = []  # Liste pour stocker les Pokémon avec leurs détails
+
+    while len(unique_pokemons) < count:
+        random_pokemon = get_random_pokemon(pokemon_list)
+        if random_pokemon and random_pokemon not in unique_pokemons:
+            unique_pokemons.append(random_pokemon)  # Ajouter le Pokémon avec ses détails
+
+    return unique_pokemons
+
 # Exemple d'utilisation
 pokemon_list = get_all_pokemon()
-random_pokemon = get_random_pokemon(pokemon_list)
-if random_pokemon:
-    print(f"Pokémon récupéré : {random_pokemon['name'].capitalize()}")
-    print(f"Stats : {random_pokemon['stats']}")
-    print(f"Mouvements sélectionnés : {random_pokemon['moves']}")
+unique_pokemons = get_unique_pokemons_with_details(pokemon_list, 16)
+
+print("Liste des 16 Pokémon récupérés (sans doublon) :")
+for pokemon in unique_pokemons:
+    print(f"\nPokémon : {pokemon['name'].capitalize()}")
+    print("Stats :")
+    for stat_name, stat_value in pokemon['stats'].items():
+        print(f"  - {stat_name.capitalize()}: {stat_value}")
+    print("Mouvements sélectionnés :")
+    for move in pokemon['moves']:
+        print(f"  - {move.capitalize()}")
