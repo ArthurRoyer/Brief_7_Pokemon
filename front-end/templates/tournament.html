@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/styles.css">
+
+    <title>La finale </title>
+</head>
+<body>
+    <h1>La finale du tournoi Pokemon </h1>
+
+    <div>
+        <!-- Afficher les deux combattants en finale -->
+        <h2>Finale : {{ winner['name'].capitalize() }} vs {{ round3_result['pokemon2']['name'].capitalize() }}</h2>
+        
+        <!-- Afficher les images des deux Pokémon de la finale -->
+        <img src="{{ winner['sprite'] }}" alt="{{ winner['name'] }}" style="width: 200px; height: 200px;">
+        <img src="{{ round3_result['pokemon2']['sprite'] }}" alt="{{ round3_result['pokemon2']['name'] }}" style="width: 200px; height: 200px;">
+    </div>
+
+    <div>
+        <!-- Afficher le gagnant de la finale -->
+        <h2>Vainqueur : {{ winner['name'].capitalize() }}</h2>
+        <img src="{{ winner['sprite'] }}" alt="{{ winner['name'] }}" style="width: 200px; height: 200px;">
+    </div>
+
+    <a href="{{ url_for('index') }}">Retour à l'accueil</a>
+</body>
+</html>
+
+
