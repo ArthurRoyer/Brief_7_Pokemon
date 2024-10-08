@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accueil - Tournoi Pokémon</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <script>
+        // Redirige vers le premier round après 5 secondes
+        setTimeout(function() {
+            window.location.href = "{{ url_for('round1') }}";
+        }, 10000);  
+    </script>
+</head>
+<body>
+    <div>
+        <h1>Bienvenue dans le tournoi Pokémon !</h1>
+        
+        <!-- Afficher la liste des participants -->
+        <h2>Liste des participants au tournoi :</h2>
+        <ul>
+            {% if session.get('pokemons') %}
+                {% for pokemon in session['pokemons'] %}
+                    <li>
+                        <img src="{{ pokemon['sprite'] }}" alt="{{ pokemon['name'] }}" style="width: 50px; height: 50px;">
+                        {{ pokemon['name'] }}
+                    </li>
+                {% endfor %}
+            {% else %}
+                <li>Aucun participant n'a été sélectionné.</li>
+            {% endif %}
+        </ul>        
+    </div>
+</body>
+</html>
