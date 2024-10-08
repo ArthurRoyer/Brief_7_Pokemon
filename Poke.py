@@ -189,10 +189,10 @@ def simulate_battle(pokemon1, pokemon2):
         first, second = pokemon2, pokemon1
         first_hp, second_hp = hp2, hp1
 
-    print(
-        f"{first['name'].capitalize()} attaque en premier avec une vitesse de {speed1 if first == pokemon1 else speed2}.")
+    print(f"{first['name'].capitalize()} attaque en premier avec une vitesse de {speed1 if first == pokemon1 else speed2}.")
 
     while first_hp > 0 and second_hp > 0:
+        # Attaque du premier Pokémon
         first_move = random.choice(first['moves'])
         damage, multiplier = calculate_damage(first, second, first_move)
 
@@ -207,13 +207,13 @@ def simulate_battle(pokemon1, pokemon2):
             effectiveness_message = ""
 
         second_hp -= damage
-        print(
-            f"{first['name'].capitalize()} utilise {first_move['name'].capitalize()} et inflige {damage} points de dégâts à {second['name'].capitalize()}. {effectiveness_message} HP restants de {second['name'].capitalize()}: {max(second_hp, 0)}")
+        print(f"{first['name'].capitalize()} utilise {first_move['name'].capitalize()} et inflige {damage} points de dégâts à {second['name'].capitalize()}. {effectiveness_message} HP restants de {second['name'].capitalize()}: {max(second_hp, 0)}")
 
         if second_hp <= 0:
             print(f"{second['name'].capitalize()} est KO !")
             return first
 
+        # Attaque du deuxième Pokémon
         second_move = random.choice(second['moves'])
         damage, multiplier = calculate_damage(second, first, second_move)
 
@@ -227,14 +227,14 @@ def simulate_battle(pokemon1, pokemon2):
             effectiveness_message = ""
 
         first_hp -= damage
-        print(
-            f"{second['name'].capitalize()} utilise {second_move['name'].capitalize()} et inflige {damage} points de dégâts à {first['name'].capitalize()}. {effectiveness_message} HP restants de {first['name'].capitalize()}: {max(first_hp, 0)}")
+        print(f"{second['name'].capitalize()} utilise {second_move['name'].capitalize()} et inflige {damage} points de dégâts à {first['name'].capitalize()}. {effectiveness_message} HP restants de {first['name'].capitalize()}: {max(first_hp, 0)}")
 
         if first_hp <= 0:
             print(f"{first['name'].capitalize()} est KO !")
             return second
 
     return None
+
 
 
 # Fonction pour organiser le tournoi
