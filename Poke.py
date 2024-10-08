@@ -265,3 +265,4 @@ def run_tournament(pokemons):
 type_effectiveness = get_type_effectiveness()
 display_type_table(type_effectiveness)
 run_tournament(unique_pokemons)
+#
