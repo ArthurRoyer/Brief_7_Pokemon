@@ -4,10 +4,10 @@ Ce projet est un simulateur de combat Pokémon qui utilise l'API PokéAPI pour r
 
 ## Fonctionnalités
 
-- **Récupération des données Pokémon** : Accède à l'API PokéAPI pour récupérer une liste de Pokémon, leurs statistiques, mouvements et types.
-- **Détails des mouvements** : Récupère les détails des mouvements, y compris leur puissance et leur classe de dégâts.
+- **Récupération des données Pokémon** : Accède à l'API PokéAPI pour récupérer une liste de Pokémon, leurs statistiques, moves et types.
+- **Détails des mouvements** : Récupère les détails des moves, y compris leur puissance et leur classe de dégâts.
 - **Efficacité des types** : Récupère les relations d'efficacité entre les types de Pokémon (dégâts doublés, réduits ou aucun effet).
-- **Simulations de combats** : Simule des combats entre deux Pokémon, prenant en compte leur vitesse, leurs mouvements et l'efficacité des types.
+- **Simulations de combats** : Simule des combats entre deux Pokémon, prenant en compte leur vitesse, leurs movess et l'efficacité des types.
 - **Tournoi** : Organise un tournoi où des Pokémon s'affrontent en séries éliminatoires jusqu'à ce qu'un champion soit couronné.
 
 ## Prérequis
