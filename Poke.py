@@ -24,7 +24,7 @@ def get_all_pokemon():
         return []
 
 
-# Fonction pour récupérer les détails d'un mouvement
+# Fonction pour récupérer les détails d'un move
 def get_move_details(move_name):
     if move_name in move_cache:
         return move_cache[move_name]
