@@ -165,10 +165,11 @@ def calculate_damage(attacker, defender, move):
                 elif defender_type in type_effectiveness[attack_type]['half_damage_to']:
                     type_multiplier *= 0.5
                 elif defender_type in type_effectiveness[attack_type]['no_damage_to']:
-                    return 0  # Aucun dégâts infligé
+                    return 0, 0  # Aucun dégâts infligé
 
     damage = base_power * type_multiplier
-    return max(0, int(damage))  # Ne pas permettre des dégâts négatifs
+    return max(0, int(damage)), type_multiplier  # Ne pas permettre des dégâts négatifs
+
 
 # Fonction pour simuler un combat entre deux Pokémon
 def simulate_battle(pokemon1, pokemon2):
@@ -188,22 +189,46 @@ def simulate_battle(pokemon1, pokemon2):
         first, second = pokemon2, pokemon1
         first_hp, second_hp = hp2, hp1
 
-    print(f"{first['name'].capitalize()} attaque en premier avec une vitesse de {speed1 if first == pokemon1 else speed2}.")
+    print(
+        f"{first['name'].capitalize()} attaque en premier avec une vitesse de {speed1 if first == pokemon1 else speed2}.")
 
     while first_hp > 0 and second_hp > 0:
         first_move = random.choice(first['moves'])
-        damage = calculate_damage(first, second, first_move)
+        damage, multiplier = calculate_damage(first, second, first_move)
+
+        # Message d'efficacité de l'attaque
+        if multiplier == 0:
+            effectiveness_message = "Ça n'a aucun effet."
+        elif multiplier == 0.5:
+            effectiveness_message = "Ce n'est pas très efficace."
+        elif multiplier == 2:
+            effectiveness_message = "C'est super efficace."
+        else:
+            effectiveness_message = ""
+
         second_hp -= damage
-        print(f"{first['name'].capitalize()} utilise {first_move['name'].capitalize()} et inflige {damage} points de dégâts à {second['name'].capitalize()}. HP restants de {second['name'].capitalize()}: {max(second_hp, 0)}")
+        print(
+            f"{first['name'].capitalize()} utilise {first_move['name'].capitalize()} et inflige {damage} points de dégâts à {second['name'].capitalize()}. {effectiveness_message} HP restants de {second['name'].capitalize()}: {max(second_hp, 0)}")
 
         if second_hp <= 0:
             print(f"{second['name'].capitalize()} est KO !")
             return first
 
         second_move = random.choice(second['moves'])
-        damage = calculate_damage(second, first, second_move)
+        damage, multiplier = calculate_damage(second, first, second_move)
+
+        if multiplier == 0:
+            effectiveness_message = "Ça n'a aucun effet."
+        elif multiplier == 0.5:
+            effectiveness_message = "Ce n'est pas très efficace."
+        elif multiplier == 2:
+            effectiveness_message = "C'est super efficace."
+        else:
+            effectiveness_message = ""
+
         first_hp -= damage
-        print(f"{second['name'].capitalize()} utilise {second_move['name'].capitalize()} et inflige {damage} points de dégâts à {first['name'].capitalize()}. HP restants de {first['name'].capitalize()}: {max(first_hp, 0)}")
+        print(
+            f"{second['name'].capitalize()} utilise {second_move['name'].capitalize()} et inflige {damage} points de dégâts à {first['name'].capitalize()}. {effectiveness_message} HP restants de {first['name'].capitalize()}: {max(first_hp, 0)}")
 
         if first_hp <= 0:
             print(f"{first['name'].capitalize()} est KO !")
@@ -233,7 +258,7 @@ def run_tournament(pokemons):
         pokemons = winners
         round_number += 1
 
-    print(f"Vainqueur du tournoi de la ligue Rubis : {pokemons[0]['name'].capitalize()}")
+    print(f"Vainqueur de la conférence de Verteresse : {pokemons[0]['name'].capitalize()}")
 
 
 # Exemple d'utilisation pour exécuter le tournoi
