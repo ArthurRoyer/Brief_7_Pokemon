@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Round 3 - Tournoi Pokémon</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <script>
+        // Redirige vers le premier round après 10 secondes
+        setTimeout(function() {
+            window.location.href = "{{ url_for('tournament') }}";
+        }, 10000);  
+    </script>
+</head>
+<body>
+    <h1>Round 3 </h1>
+    
+    <div>
+        <h2>{{ round3_result['pokemon1']['name'] }} vs {{ round3_result['pokemon2']['name'] }}</h2>
+        <img src="{{ round3_result['pokemon1']['sprite'] }}" alt="{{ round3_result['pokemon1']['name'] }}" width="200">
+        <img src="{{ round3_result['pokemon2']['sprite'] }}" alt="{{ round3_result['pokemon2']['name'] }}" width="200">
+    </div>
+
+    <div>
+        <h2>Vainqueur : {{ round3_result['winner']['name'] }}</h2>
+        <img src="{{ round3_result['winner']['sprite'] }}" alt="{{ round3_result['winner']['name'] }}" width="200">
+    </div>
+
+</body>
+</html>
