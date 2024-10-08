@@ -1,4 +1,4 @@
-# Pokémon Battle Simulator
+# Simulateur de tournoi de Pokémon
 
 Ce projet est un simulateur de combat Pokémon qui utilise l'API PokéAPI pour récupérer des données sur les Pokémon, leurs mouvements et leurs types. Le simulateur permet de choisir des Pokémon aléatoires et de les faire s'affronter dans des combats jusqu'à ce qu'un vainqueur soit déterminé.
 
