@@ -3,7 +3,6 @@ import random
 
 # URL de base de l'API PokéAPI
 BASE_URL = "https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0"
-# URL pour les types
 BASE_URL_TYPE = "https://pokeapi.co/api/v2/type/"
 
 
@@ -79,6 +78,7 @@ def display_type_table(type_effectiveness):
         print("-" * 50)
 
 
+
 # Fonction pour récupérer les données d'un Pokémon aléatoire
 def get_random_pokemon(pokemon_list):
     if not pokemon_list:
@@ -95,19 +95,24 @@ def get_random_pokemon(pokemon_list):
             # Extraire les stats
             stats = {stat['stat']['name']: stat['base_stat'] for stat in data['stats']}
 
+            # Extraire les types du Pokémon
+            types = [type_info['type']['name'] for type_info in data['types']]
+
             # Extraire les mouvements
             moves = [move['move']['name'] for move in data['moves']]
 
             # Vérifier si le Pokémon a au moins un mouvement
             if moves:
                 # Sélectionner 4 mouvements aléatoires
-                selected_moves = random.sample(moves, min(4, len(moves)))  # S'assurer de ne pas dépasser le nombre de mouvements disponibles
+                selected_moves = random.sample(moves, min(4,
+                                                          len(moves)))  # S'assurer de ne pas dépasser le nombre de mouvements disponibles
 
                 # Récupérer les détails des mouvements sélectionnés
                 moves_details = [get_move_details(move) for move in selected_moves]
 
                 return {
                     'name': data['name'],
+                    'types': types,  # Ajout des types ici
                     'stats': stats,
                     'moves': moves_details  # Stocker les détails des mouvements
                 }
@@ -116,6 +121,7 @@ def get_random_pokemon(pokemon_list):
         else:
             print(f"Erreur lors de la récupération du Pokémon avec ID {pokemon_id}")
             return None
+
 
 
 # Fonction pour récupérer 16 Pokémon uniques avec leurs stats et moves
@@ -136,10 +142,16 @@ unique_pokemons = get_unique_pokemons_with_details(pokemon_list, 16)
 
 print("Liste des 16 Pokémon récupérés :")
 for pokemon in unique_pokemons:
-    print(f"\nPokémon : {pokemon['name'].capitalize()}")
+    # Affichage du nom et des types du Pokémon
+    print(
+        f"\nPokémon : {pokemon['name'].capitalize()} (Types: {', '.join([poke_type.capitalize() for poke_type in pokemon['types']])})")
+
+    # Affichage des stats
     print("Stats :")
     for stat_name, stat_value in pokemon['stats'].items():
         print(f"  - {stat_name.capitalize()}: {stat_value}")
+
+    # Affichage des mouvements
     print(f"\nMoveset {pokemon['name'].capitalize()} :")
     for move in pokemon['moves']:
         print(
@@ -252,7 +264,6 @@ def run_tournament(pokemons):
 type_effectiveness = get_type_effectiveness()
 display_type_table(type_effectiveness)
 run_tournament(unique_pokemons)
-
 
 
 
