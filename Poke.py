@@ -3,6 +3,7 @@ import random
 
 # URL de base de l'API PokéAPI
 BASE_URL = "https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0"
+# URL pour les types
 BASE_URL_TYPE = "https://pokeapi.co/api/v2/type/"
 
 
