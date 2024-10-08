@@ -11,9 +11,9 @@ Ce projet est un simulateur de combat Pokémon qui utilise l'API PokéAPI pour r
 - **Tournoi** : Organise un tournoi où des Pokémon s'affrontent en séries éliminatoires jusqu'à ce qu'un champion soit couronné.
   
 ## Front-end du projet
-Pour ce projet nous avons utilisé Flask qui est un framework de Python pour le web.
-Nous avons mis en place une animation, au bout de 10 secondes on change de script html. 
-Il y a la liste des participants du tournoi dans index.html puis les combatants au round 1(round1.html) puis round 2(round2.html) puis round 3(round3.html) et le gagnant du tournoi (tournament.html).
+- Pour ce projet nous avons utilisé Flask qui est un framework de Python pour le web.
+- Nous avons mis en place une animation, au bout de 10 secondes on change de script html. 
+- Il y a la liste des participants du tournoi dans index.html puis les combatants au round 1(round1.html) puis round 2(round2.html) puis round 3(round3.html) et le gagnant du tournoi (tournament.html).
 
 ## Prérequis
 
