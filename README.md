@@ -18,7 +18,7 @@ Ce projet est un simulateur de combat Pokémon qui utilise l'API PokéAPI pour r
 ## Installation
 
 1. Clonez le dépôt :
-   git clone <URL_DU_DEPOT>
+   git clone <https://github.com/ArthurRoyer/Brief_7_Pokemon.git>
 
 2. Installez les dépendances nécessaires :
    pip install requests
